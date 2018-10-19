@@ -1,0 +1,3496 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scutthesis
+\options pdfcover
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package none
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "博士论文标题"
+\pdf_author "你的名字"
+\pdf_subject "统计数据分析课程报告"
+\pdf_keywords "关键字1, 关键字2"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "unicode=false,linkcolor=blue, anchorcolor=black, citecolor=olive, filecolor=magenta, menucolor=red, urlcolor=magenta, pdfstartview=FitH"
+\papersize default
+\use_geometry false
+\use_package amsmath 0
+\use_package amssymb 0
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index 索引
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+A股面面观
+\end_layout
+
+\begin_layout AbstractCN
+在这短短的三十年IPO历史中，东南沿海各省份扮演者举足轻重的角色，广东、浙江、江苏和北京、上海这5地A股上市公司的数量达到1974家，占整个A股数量的56.19%
+。同时这三十年也是中国股市反复试错中成长的三十年，在四轮IPO暂停的过程中，中国股市一步步走向健康完善的市场。通过对市值组成分析发现，自从定增融资推出后，市场上
+IPO融资占比逐渐减弱，这一现象在近十年尤为突出。除了在2010年受益于2009年创新板的开板以及中小板的快速发展而掀起的IPO狂潮，使其占比增大之外，定增融资
+的占比远远高于IPO融资。通过比较十年来行业规模大小与上市公司数量，明显看到制造业、医药和服务行业规模显著增加，同时金融业在总市值上逐渐萎缩，但是其净利润占比保
+持稳定。从地理位置角度，我们用气泡图画出了GDP与总市值的省际分布，可以看出不同地区GDP和总市值的差异。从时间维度角度，我们画出A股年度涨跌幅分布，观察每年年
+度涨跌幅变化。 最后我们用随机森林做出变量重要性图，从图中可以看出不同变量对模型的解释比例。对三大板块上市公司的上涨比例做方差分析发现，其差异较为显著。政策变化
+对各个板块影响不同。总体而言创业板和中小板在政策的影响下，涨势较好，三者之间差异大。而2011年和2016年市场暴跌，三大板块均受重创，差异较小。
+ 
+\end_layout
+
+\begin_layout KeywordsCN
+A股 、IPO、 定增融资、市值、涨跌幅
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+简介
+\end_layout
+
+\begin_layout Section
+研究背景
+\end_layout
+
+\begin_layout Standard
+A股的正式名称是人民币普通股票。它是由我国境内的公司发行，供境内机构、组织或个人（不含台、港、澳投资者）以人民币认购和交易的普通股股票。A股不是实物股票，以无纸
+化电子记账，实行“T+1”交割制度，有涨跌幅（10%）限制，参与投资者为中国大陆机构或个人。我国上市公司的股票有A股（用人民币交易在中国境内上市针对国内的股票）
+、B股（用人民币标值但只能用外币交易且在中国境内上市针对外国人或者港澳台地区的股票）、H股（内地注册、香港上市的外资股）、N股（内地注册，纽约上市的外资股）
+ 和S股（没有进行股权分置改革的股票，在股名前加S，日涨跌幅为上下5%）等的区分。这一区分主要依据股票的上市地点和所面对的投资者而定。 1990年，我国A股股票
+一共仅有10只，至1997年年底，A股股票增加到 720只，A股总股本为1646亿股，总市值17529亿元人民币，与国内生产总值的比率为22．7%。1997年A
+股年成交量为4471亿股，年成交金额为30 295亿元人民币，我国A股股票市场经过几年的快速发展，已经初具规模。近些年有越来越多的人关注股票甚至参与其中，股票的
+关注度主要反映用户对于股票、行业、市场关注变化的关注。关注度的变化可以有效的反映股票、行业、市场热点变化趋势和人气变化趋势。分析股票少不了了解股票IPO的历史
+ ，1990年12月19日，上海证券交易所正式开业，上证指数基点100点，最早IPO的八只股票又称上海“老八股”，分别为：申华电工、飞乐股份、豫园商城、真空电子
+、浙江凤凰、飞乐音响、爱使股份、延中实业。1991年7月3日，深圳证券交易所正式开业，最先IPO的五支股票分别是：深发展、深万科、深金田、深安达、深原野等5只股
+票，由于这5只股票于深交所试营业前就在深圳特区证券公司公开柜台上市交易，史称“深市老五股”。20多年过去了，沪市老八股和深市老五股，这13只沪深两市最早IPO的
+个股，有的发展势头良好，有的出现连续亏损、有的已经改头换面、个别的已经退市，不过绝大多数还是活了下来，这13只个股当年的总市值尚不足今天的一只中小盘股，但它们却
+是燎原的星星之火，点燃了沪深A股证券市场的第一把火。本文将从时间、空间维度分析IPO，再分析历次IPO对大盘的影响。
+\end_layout
+
+\begin_layout Standard
+上市公司是市场经济环境下各行各业的佼佼者，其发展水平某种程度上体现了一个城市的综合竞争力；GDP是按市场价格计算的一个国家（或地区）所有常住单位在一定时期内生产
+活动的最终成果，故为了比较中国内陆经济发达地区与落后地区的差距，研究各省及主要城市GDP有很重要的意义，因此我们可以时间和空间维度观察其变化，对不同时间的GDP
+变化和不同地区的GDP变化做出解释，紧接着我们可以从A股总市值角度来分析，也相应地从时间和空间角度作出解释。
+\end_layout
+
+\begin_layout Standard
+涨跌幅限制是指证券交易所为了抑制过度投机行为，防止市场出现过分的暴涨暴跌，而在每天的交易中规定当日的证券交易价格在前一个交易日收盘价的基础上上下波动的幅度。20
+15年4月8日，券商股力扛反弹大旗，板块大涨近7%，保险、银行等蓝筹股联动，带动沪指午后强攻上4000点大关，刷新7年多新高纪录。2015年8月24日全球市场进
+入震荡，被称为“金融市场黑八月”；25日，沪指再挫近8%，过去4个交易日累计跌幅扩大至22%，为1996年以来最大四日跌幅。隔夜，欧美股市追跌A股，全球金融市场
+恐慌指数VIX升至记录高位，本轮由人民币贬值和A股暴跌引发的全球市场恐慌，仍在发酵。为了研究A股走势，我们可以先做出A股年度涨跌密度图，比较当年存量公司股票的涨
+跌幅度。
+\end_layout
+
+\begin_layout Standard
+主板主要针对大型蓝筹企业挂牌上市，分为上海证券交易所主板（股票代码以60开头） 和深圳证券交易所主板（股票代码以000开头）；中小板主要针对中型稳定发展，但是未
+达到主板挂牌要求的企业，属于深圳交易所的一个板块（股票代码以002开头）；创业板主要针对科技成长型中小企业，属于深圳交易所的一个板块（股票代码300开头）。相对
+于创业板市场而言，主板市场是资本市场重要组成部分，很大程度上能反映经济发展状况，有“国民经济晴雨表”之称，主板市场对发行人的营业期限、股本大小、盈利水平、最低市
+值等方面的要求标准较高，上市公司大多为大型成熟企业，具有较大的资本规模以及稳定的盈利能力。中小板市场是创业板的一个过渡，创业板公司往往具有较高的成长性，往往成立
+时间短、规模小，业绩也不突出，因此分析A股少不了分析相应板块热度。我们可以将注意力转向于在创业板、中小板和主板上市的公司，分析其从2009年到2017年公司股价
+增长的数量占比情况上，据此来观看不同板块上市公司的表现情况等。历年来大众关注大多集中于股票的价值上，我们可以分析A股近十年市值和总利润。
+\end_layout
+
+\begin_layout Standard
+“定向增发”（简称“定增”）是指“上市公司采用非公开方式，向特定对象发行股票的行为”，特定投资者的人数限制在10人之内。上市公司融资的渠道可以分为内源和外源融资
+，定增属于外源融资中的股权融资。在成熟的资本市场中，这是一种应运广泛的再融资方式。自股权分置改革之后，2006年5月8日颁布实施的《上市公司证券发行管理办法》首
+次将非公开发行（即定增）股票这一“新引进物种”纳入到我国法规约束范围。由于非公开发行具有不增加即期扩容压力、发行周期短等优点，非常适合在全流通背景下大股东将优质
+资产注入上市公司实现整体上市，定增也很快成为我国上市公司资本市场股权再融资的主流方式之一。目前，定增在为我国上市公司实现整体上市、筹集项目资金、完成并购和实行股
+权激励等方面发挥着重要作用。 自股权分置改革以来，经过多年的发展，定增无论从发行数量、发行股本、融资额等角度看，都已经成为我国上市公司主流的再融资方式。与此同时
+，配股相比于定增而言，见效慢、效率低，因此这种再融资方式已经逐渐成为我国再融资市场的配角。根据相关数据，2010年到2011年我国定增融资超过IPO成为A股第一
+大融资来源，同时成为机构投资者的主要投资市场。2009年以来的年平均融资规模超过过20亿人民币。受此启发，我们可以考虑研究近三十年来IPO融资额和定增融资额的份
+额变化，来探讨相关趋势。
+\end_layout
+
+\begin_layout Section
+研究目的与问题
+\end_layout
+
+\begin_layout Standard
+在证券市场日益扩大的今天，A股市场正逐渐走进大众的视野，与人们生活关系日益密切，因此本文主要的研究对象便是A股市场。研究目的主要有以下几点。 
+\end_layout
+
+\begin_layout Itemize
+了解A股市场从1990年到现在的发展历程； 
+\end_layout
+
+\begin_layout Itemize
+了解A股市场上，国家政策对定增融资发展以及IPO融资与定增融资关系的影响；
+\end_layout
+
+\begin_layout Itemize
+探究IPO政策对A股市场以及不同地区上市公司的影响； 
+\end_layout
+
+\begin_layout Itemize
+了解近十年来，A股市场在不同行业之间市值和利润的变化情况；
+\end_layout
+
+\begin_layout Itemize
+找寻市场市值、GDP和城市三者之间的关系，了解何种因素对市值有较大的影响； 
+\end_layout
+
+\begin_layout Itemize
+了解A股市场的涨跌情况；
+\end_layout
+
+\begin_layout Itemize
+分析A股市场上创业板、中小企业板和主板之间在受到冲击时影响的相似性和差异性。
+\end_layout
+
+\begin_layout Standard
+通过文献查找和可获得的数据，我们可以利用以下问题来实现我们的研究目的。具体研究问题如下。
+\end_layout
+
+\begin_layout Itemize
+历年来A股上市公司在不同地区的数量分布以及IPO政策对公司的上市数量影响有多大； 
+\end_layout
+
+\begin_layout Itemize
+IPO和定增融资募集的额度以及占比如何；
+\end_layout
+
+\begin_layout Itemize
+不同行业所占市值以及利润比例如何；
+\end_layout
+
+\begin_layout Itemize
+近十年来，上市公司数最多的十大地区，其市值与GDP呈现出何种关系； 
+\end_layout
+
+\begin_layout Itemize
+A股上市公司的年度涨跌分布； 
+\end_layout
+
+\begin_layout Itemize
+不同年份创业板、中小企业板和主板之间的涨跌比例以及受市场波动的影响程度。
+\end_layout
+
+\begin_layout Chapter
+文献综述
+\end_layout
+
+\begin_layout Standard
+本文首先通过时间与空间视角研究了我国A股三十年来IPO数量及地理分布情况。国内关于IPO研究的学术论文和券商研究报告数量并不多，目前较多研究集中在个股IPO情况
+和IPO相关政策，而从宏观视角出发考察历年IPO地理分布和不同年份间数量变化的相对较少。通过IPO时间和空间视角来发掘背后的事件规律，从而更好得提出政策建议的研
+究更是空白领域。现有研究内容可以分为以下三类： 
+\end_layout
+
+\begin_layout Enumerate
+股市IPO重要性的研究 
+\begin_inset Newline newline
+\end_inset
+
+易宪容（2017）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+强调当前中国金融改革的主要任务就是要加快资本市场的改革， 这样才能保证中国资本市场的健康发展，才能提高金融服务实体经济的效率。这样既可为实体经济增加融资渠道，也
+是降低企业融资成本，扩展居民投资渠道。而股市的IPO不重新启动，要达到这个目标是根本不可能的。李若愚（2009）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+指出新股发行的恢复不仅不会对二级市场形成冲击,反而会吸引新的资金加入,提高市场对IPO重启的承受能力,助推二级市场上涨。中国股市的 IPO 启动成了让市场供求关
+系恢复常态最为关键的一步，也是推进中国股市改革最为重要的一步。
+\end_layout
+
+\begin_layout Enumerate
+IPO模式的政策性研究 
+\begin_inset Newline newline
+\end_inset
+
+劳佳迪（2016）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+指出彼时被热烈讨论的是证监会加速发审在为注册制出台铺路，此时关于注册制的官方态度已风向大转，2015 年出现的股市大幅波动令监管层始料未及，彻底暴露出A股的内在
+顽疾，如何练好“基本功”已经被放在IPO注册制度重大转变之前考虑。市场改革的重心正转向风险防范和多层次资本市场建设。马光远（2009）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-4"
+
+\end_inset
+
+强调IPO改革只是初步解决了市场化定价机制和中小投资者中签问题，而且，对这两个问题的解决也是小心翼翼，并没有大刀阔斧的举措和应对。而将最艰难的五大核心问题留给了
+未来：一是流通股比例太低，中石油流通比例不到总股本的 10%，导致 大股东上市的唯一目的是为了圈钱；二是流通股比例太低，股票供应不足，导致一级市场市盈率畸高；三
+是新股上市当天，不设涨跌停，让高中签的机构爆炒新股，进一步推高新股市盈率，引发股市未来的动荡；四是限售期结束后，通过两级市场的高市盈率而获得暴利的
+ “大小非”集体出逃，进一步引发股市的暴跌；五是管理层人为控制发行节奏，使得股市根子上必然成为政策市。 
+\end_layout
+
+\begin_layout Enumerate
+上市公司地理分布的影响
+\begin_inset Newline newline
+\end_inset
+
+宋玉（2012）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+发现位于东部地区的上市公司更受机构投资者的亲睐,即使在控制上市公司财务信息和市场表现信息的情况下,区域地理特征变量仍然显著影响机构投资者的持股决策;上市公司办公
+地与机构投资者之间的距离远近负向影响机构投资者的持股比例,但是在控制上市公司基本面信息的情况下,距离特征变量的影响力下降。叶茂林（2009）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-6"
+
+\end_inset
+
+对我国上市公司的地区分布进行了实证分析。上市公司的地区分布特征基本上和三大经济带的发展差异相符,东部地区上市公司数量多,平均股本规模和市值大,融资能力强,新兴行
+业的上市公司比例大,资本证券化水平高,明显呈现“马太效应”。为实现“西部大开发”的战略目标,加快西部地区的经济发展,缩小地区差异,上市资源应向西部倾斜,注重培育
+西部地区有条件的企业上市,并发挥上市公司在“西部大开发”和提升西部地区产业结构中的作用。东部地区资本运作的工作重点应从争取新企业上市转向重组现有上市公司资源。
+ 
+\end_layout
+
+\begin_layout Standard
+本文第二部分首先着重研究了GDP与总市值省际分布，在这一领域现有研究较少。王中华（2013）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-7"
+
+\end_inset
+
+分别计量分析了各省区市创业板上市公司的数量、总市值、总利润、平均市盈率与各省区市GDP总量和人均值的关系,发现创业板上市公司的数量、总市值的区域分布主要与各区域
+的GDP总量和人均值有较大的关系,而创业板上市公司总利润、平均市盈率与GDP总量和人均值的关系强度较弱。创业板上市公司的上市数量在各省区市之间的分配,可能主要不
+是依赖于各创业型公司的质量。有计划成为创业板上市公司的企业,若注册在GDP总量或人均值比较靠前的东部省份,其成功上市的概率更高。
+\end_layout
+
+\begin_layout Standard
+本文接下来研究了行业板块市值和热度相关的问题，洪伟（2012）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-8"
+
+\end_inset
+
+指出在长区间内，我们可以轻易发现相对市值上升靠前的绝大部分为新兴及大消费行业，排名靠后的绝大部分为传统及重化工行业。这基本表明了我国经济结构变化的长期趋势，由以
+往的投资出口拉动型转为由消费及科技来推动经济增长。同时我 国产业结构也将逐步由高新技术产业取代重化工业成为主导产业。因而，在我国产业结构升级仍在稳步进行的阶段，
+新兴及大消费行业的市值将持续相对上升，传统及重化工业的市值将持续下跌。 
+\end_layout
+
+\begin_layout Standard
+最后本文研究了A股历年定增与发行之间的关系，杨霞（2016）
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-9"
+
+\end_inset
+
+指出定增已成为国内上市公司再融资和购买资产的主要手段。仅今年公布定增预案的融资规模就已超过 2 万亿，而已实施的规模也已超过 1.3 万亿，将 IPO
+ 远甩在身后。与此同时，定增市场存在的问题也不容忽视，如高折价、利益输送、借机炒作等。美国作为发达资本市场，对股权再融资市场已有非常成熟的监管经验。借鉴其监管的
+相关制度和理念，有利于进一步完善我国资本市场投融资功能，提高资源配置效率，助力国民经济健康发展。 
+\end_layout
+
+\begin_layout Chapter
+方法介绍
+\end_layout
+
+\begin_layout Standard
+本文采用方法主要包括方差分析和随机森林。方差分析，又称“变异数分析”，是Fisher发明的，用于两个及两个以上样本均数差别的显著性检验。 由于各种因素的影响，研
+究所得的数据呈现波动状。造成波动的原因可分成两类，一是不可控的随机因素，另一是研究中施加的对结果形成影响的可控因素。按照方差分析的控制变量个数可以将方差分析分为
+单因素方差分析和多因素方差分析两种类型。本文所使用的方差分析为单因素方差分析，将上市公司所在的上市板包括主板、中小板和创业板三个作为控制变量，分析三个板块在20
+08-2017年的年涨跌幅是否存在显著差异，从而分析过去十年各个年度市场的投资风险偏好。 
+\end_layout
+
+\begin_layout Standard
+随机森林是一种基于分类树的算法。这个算法需要模拟和迭代，被归类为机器学习中的一种方法。经典的机器学习模型是神经网络，有半个多世纪的历史了。神经网络预测精确，但是
+计算量很大。上世纪八十年代Breiman等人发明了分类和回归树的算法，通过反复二分数据进行分类或回归，计算量大大降低。2001年Breiman和Cutler借鉴
+贝尔实验室的Ho所提出的随机决策森林的方法，把分类树组合成随机森林，即在变量的使用和数据的使用上进行随机化，生成很多分类树，再汇总分类树的结果。本文所使用的随机
+森林方法是随机森林回归器，通过将上市公司所在的行业、所在省份、所在上市板块进行独热编码之后，结合财务指标包括增长率和市值、经营净现金流量等财务指标作为随机森林的
+输入变量，对各个公司在每年度的涨跌幅进行回归预测，通过随机森林的模型变量重要性得出对每年的涨跌幅的贡献较大的企业指标。 
+\end_layout
+
+\begin_layout Chapter
+数据说明
+\end_layout
+
+\begin_layout Section
+数据库导入
+\end_layout
+
+\begin_layout Standard
+文章从wind数据库导入A股市场成立以来所有上市公司的基本信息、年度财务报表（2008-2017），从国泰安数据导入所有上市公司的基本信息（补充），从国家统计局
+导入各省年度GDP数据，数据变量说明见表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:财务信息表"
+
+\end_inset
+
+和表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:企业信息表"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:财务信息表"
+
+\end_inset
+
+财务信息表
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量说明
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券代码
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A股交易代码
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+唯一主键
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券简称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 股票中文名称 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+资产总计 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上市公司资产总计 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 年度合并报表
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所有者权益合计
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 资产负债表所有者权益合计
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净利润
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净利润
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净资产收益率
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROE，取平均
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+总资产报酬率
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+资产负债率
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+总资产/总负债
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+营业总收入(同比增长率)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 营业总额增长/总收入（同比）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净利润(同比增长率)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净利润增长/总收入（同比）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+经营性现金净流量/营业总收入
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+经营性现金净流量/营业总收入
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+每股股利(税后)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+净利润总额/发行总股本
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+总市值
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上市公司总市值（年初）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+区间涨跌幅 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上市公司总市值年度涨跌幅
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+总资产周转率
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+销售收入/总资产
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+主营业务比率
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+主营业务利润 /利润总额 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年度合并报表 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:企业信息表"
+
+\end_inset
+
+企业信息表
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="19" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="7cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+变量说明
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券代码
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A股交易代码
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+唯一主键 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券简称 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 股票中文名称 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+首发上市日期
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ IPO日期
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 首发价格
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IPO每股发行价格 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单位（元）
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+首发募集资金
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IPO募集总资金
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单位（百万元） 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+首发市盈率(摊薄) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上市板
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券上市板块 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+主板、中小板、创业板
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上市地点
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券上市交易所
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上海、深圳 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+戴帽摘帽时间
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ST、去ST时间
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+证券曾用名
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所属概念板块
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是否借壳上市
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是、否
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+公司属性
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+地方国有、民营、中央国有、外资、公众、集体、其他企业
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+成立日期
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+格式Ymd
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+省份
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+城市
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所属申万行业名称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+学历占比 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+博士、硕士、本科、专科
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+数据处理 
+\end_layout
+
+\begin_layout Subsection
+数据宽表转长表 
+\end_layout
+
+\begin_layout Standard
+外源数据库导入数据形式为按“年份+科目”为列变量的宽表表形式，在数据分析前将此宽表转长表，提取“年份”、“科目”为新变量。 
+\end_layout
+
+\begin_layout Subsection
+缺失值处理
+\end_layout
+
+\begin_layout Standard
+财务信息表的数据缺失情况是由于上市公司的上市公司IPO日期不同，因此财务报表的披露情况不同，较晚发行的企业财务数据为NA（未上市公司没有财务报表信息），因此不对
+缺失值进行填补。
+\end_layout
+
+\begin_layout Chapter
+分析及结论
+\end_layout
+
+\begin_layout Section
+A股三十年
+\end_layout
+
+\begin_layout Subsection
+空间维度看IPO 
+\end_layout
+
+\begin_layout Standard
+在IPO市场刚刚开放之初，上市公司仅在广东省和上海市两处，并逐渐从东南沿海扩散到内陆各省，直到1996年，上市公司如雨后春笋遍地开花，该年全国各省均有公司成功I
+PO，开创了全国性IPO的先河，详见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:1996年IPO地理分布图"
+
+\end_inset
+
+。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/1996.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:1996年IPO地理分布图"
+
+\end_inset
+
+1996年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在这短短的三十年IPO历史中，东南沿海各省份扮演者举足轻重的角色，无论在数量还是规模上，遥遥领先内陆各省，激励了一批又一批的企业在这里产生。截至2018年5月，
+拥有上市公司最多的省份为广东，该省上市公司达到577家，占全国的16.42%，位居全国首位，与其经济总量成正比。紧随广东之后的是浙江。截止今年5月3日，该省上市公
+司数量达到了421家，占全国的比重为11.98%。排名第三位的省份是江苏省，上市公司总数量达到了387家，占全国的比重为11.2%。 
+\end_layout
+
+\begin_layout Standard
+与此同时，北京和上海分别以311家和278家上市公司数量排在全国第4和第5位。京沪两大直辖市作为强一线城市，是中国最具辐射力的两大中心城市，不仅拥有大量国企，不
+少民营企业在公司发展壮大后也将总部迁至京沪。 从数量上来看，这5地A股上市公司的数量达到1974家，占整个A股数量的56.19%。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/2017.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2017年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+时间维度看IPO 
+\end_layout
+
+\begin_layout Standard
+可以说，中国股市是在“反复试错纠错，再试错再纠错”中成长的，反应到IPO上，就是一段时间密集发行，一段时期暂缓发行，如此不断，循环往复。从我们的IPO动态地图中
+可以明显看出，1995年、2005年、2009年以及2013年这四个年份中IPO的数量异常的少，接下来我们通过分析这些年的IPO市场规则的变化，来解释这四年IP
+O数量锐减背后的逻辑。 
+\end_layout
+
+\begin_layout Itemize
+第一轮暂停首先是1994年7月21日至1994年12月7日，空窗期五个月。 
+\end_layout
+
+\begin_layout Standard
+从1993年6月到1994年7月，上证指数从收盘1007点跌到333点，一年零一个月，指数跌去67%，是什么力量让中国股市在一年时间里跌去了大半？是股市无节制的
+大扩容。1993年2月，上海股市的股票数量才刚刚达到30只，加上深圳的股票，总数也不超过50只，而到1994年7月底的时候，两市合计有上市公司股票273只。新股
+大扩容，市场失血严重，股市跌跌不休。1994年7月，三大救市政策出台，其中一条措施就是暂停新股发行。
+\end_layout
+
+\begin_layout Standard
+这一消息，让股市在8月和9月暴涨200%多。管理层有点恐慌，很快在年底之前宣布1995年新的新股发行额度。IPO重新启动后，股市再次陷入低迷，到1995年2月股
+指探底至524点。 
+\end_layout
+
+\begin_layout Standard
+因为股市极度低迷，1994年12月IPO重启后仅一个月即告再度暂停，空窗期五个月。这次暂停期间，还发生了327国债违规事件的恶劣影响，导致5月17日中国第一个金
+融期货品种宣告夭折。国债期货的暂停，使得部分期市资金回流股市，把自1994年以来的反弹升浪推向了高潮，大盘一度在三个交易日内从580点涨到926点。
+ 
+\end_layout
+
+\begin_layout Standard
+看到大盘上涨企稳之后，国务院证券委宣布当年新股发行规模将在二季度下达，IPO重启新股发行恢复，一轮新的下跌重新开始，6月12日大盘已经跌破700点，至7月初，大
+盘已经跌至600点附近。 
+\end_layout
+
+\begin_layout Standard
+无独有偶紧接着1995年7月5日至1996年1月3日，空窗期六个月。 
+\end_layout
+
+\begin_layout Standard
+这次停发新股距离上次又是仅有一个月的时间，从连续两次仅相隔一个月就停发新股可以看出，主要是市场的低迷让新股发行停止，但停发新股并没有挽救股市，期间大盘也并没有走
+出牛市行情，还曾达阶到段性底部513点。 在新股发行重启后，虽然市场扩容，但由于当时的中国经济基本面发生变化，通胀得到成功治理，上市公司业绩有了较大改善，证券投
+资基金的面世也改变了投资者结构。在此背景下，A股迎来了一波大的行情。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/1995.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+1995年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+第二轮暂停先是2004年8月26日至2005年1月23日，空窗期五个月。 
+\end_layout
+
+\begin_layout Standard
+证监会于当年公布了试行IPO询价制度，在正式方案出台前，IPO被暂停。这次IPO暂停时，A股仍处在2001年以来的熊市当中。暂停期间，A股市场虽然也出现了多次反
+弹，但是下降趋势十分明显，市场再度创出新低。由于新的询价制度对当时的股价形成不小的冲击，扩容也对市场造成一定影响，因此IPO暂停并没有给股市带来强势逆转。
+ 
+\end_layout
+
+\begin_layout Standard
+到2005年1月，华电国际的发行，宣告暂停三个多月的IPO重新启动。股新股发行重启后，大盘出现了短暂的反弹，上证综指从1180点附近反弹至1300点之上，但这次
+的反弹持续时间不到两个月就结束了。 
+\end_layout
+
+\begin_layout Standard
+紧接着是2005年5月25日至2006年6月2日，空窗期为一年。 
+\end_layout
+
+\begin_layout Standard
+因为股改的启动，新股发行暂停了一年。政策非常明确地指出IPO和再融资要等股改之后进行，这需要两个条件，一是市场的稳定，二是完成股改的上市公司市值超过总市值50%
+，否则没有新的定价机制。这一轮空窗期开启后不久，上证综指跌至历史低点998点。 
+\end_layout
+
+\begin_layout Standard
+而当空窗期进入尾声时，股指开始大幅度回升，新的牛市随之来临。2006年6月5日，新老划断第一股中工国际招股，虽然导致了短期市场的回落，股指也从1700点附近最低
+回落到1512点，但随后很快就创出新高，此后更是一路上涨到6000点之上，A股最终迎来了史上最大一轮牛市，这次的例子表明，新股发行与否对市场的影响只是短期的，绝
+不能改变市场的大趋势。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/2005.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2005年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+第三轮暂停是2008年12月6日至2009年6月29日，空窗期八个月。 
+\end_layout
+
+\begin_layout Standard
+在此次IPO暂停期间，受金融危机等多重因素影响，A股在经历了6124点的疯狂之后一路下行，9月18日，大盘最低见1802点，在此背景下，至2008年12月时已经
+下跌了1年多，股指最低1664点，IPO只好暂停。 
+\end_layout
+
+\begin_layout Standard
+进入2009年后，市场一度走出2008年至今最大的一波反弹行情。2009年6月底，A股IPO获得再度重启，以桂林三金在A股市场上市为起点，中国股市又进入了新一轮
+密集IPO时期。从2009年6月至2010年8月，A股市场上合计有331只股票首次公开发行，融资总额高达5487.4亿元，这是我国股票历史上前所未有的。在这短短1
+5个月时间里，月平均上市公司数达22只，月平均融资额达到365.8亿元，除去非交易日，平均几乎每个交易日都有新股上市。这次的IPO狂潮主要归功于我国中小板的快速发
+展和创业板的开板。从IPO股票数来看，沪市总计发行26只股票，深圳总计发行了305只股票，其中192只中小板股票和113只创业板股票。IPO在2009年6月末重
+启，一个月后沪指从高3478点一路阴跌，至目前徘徊在2000点附近。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/2009.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2009年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+第四轮暂停是2012年11月3日至2014年1月，空窗期14个月。 
+\end_layout
+
+\begin_layout Standard
+此次IPO暂停，虽然监管层一直没有明确表态，但事实证明，IPO确实是处于暂停状况，暂停原因也是多方面的。其中一个原因，是从2009年8月开始，A、B股一路下跌，
+连续3年成为主要经济体表现最差市场，而深受金融危机影响的欧美国家股市反而率先走出低迷，股指连创新高。另外一个重要的原因，就是监管层开展了号称史上最严的IPO公司
+财务大检查，以挤干拟上市公司财务上的“水分”。 
+\end_layout
+
+\begin_layout Standard
+2013年11月30日，中国证监会正式发布推进新股发行体制改革意见，提出推进股票发行向注册制过渡。12月30日晚间，纽威阀门等5家已过会企业率先获得IPO的发行
+批文，至此，A股告别史上最长IPO暂停。随着IPO重启消息的发布，大盘指数应声而落，一个月时间跌破2000点大关。 
+\end_layout
+
+\begin_layout Standard
+在监管如此严厉的2013年，仍然有两家公司上市成功，它们分别是美的集团和浙能电力。美的集团换股吸收合并美的电器，此次美的集团发行A股，只是用于换股，不会募集资金
+。浙能电力的换股吸并东南发电B股方案意味着国内资本市场首家“B转A”顺利收官。可见两例均为证监会特批上市。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/2013.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2013年IPO地理分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+历次IPO暂停对大盘的影响 
+\end_layout
+
+\begin_layout Standard
+综合30年中国股市的IPO历程，假设政府暂停IPO的目的是为了扭转当时股市的趋势，那么在理想的状态下，重启IPO将意味着股市变动趋势得到了扭转。从重启后一周内的
+涨跌幅看，在8次重启中，有四次出现了跌幅，四次出现了涨幅。虽然，IPO暂停和重启政策的短期效果明显。但如从月度统计上来看，有超过70%的IPO重启政策实施后，股
+市出现了扭转局面，从上述数据来看，IPO重启对于股市来说并不肯定是坏消息。 
+\end_layout
+
+\begin_layout Standard
+第一轮的三次暂停IPO，尽管每一次暂停周期不长，期间大盘也并没有走出牛市行情，但是毫无疑问，连续三次暂停IPO无形中封闭了大盘继续深幅杀跌的空间，而且确立了50
+0点整数关的阶段性底部支撑，1996年、1997年大盘正是依托这一重要支撑，从而走出了跨年度的小牛市行情。 
+\end_layout
+
+\begin_layout Standard
+第二轮暂停IPO，时机把握得恰到好处，尤其是2005年6月至2006年6月暂停新股发行长达1年，再加上2006年、2007年适逢国内GDP增长率达到顶峰时期，可
+以说，这一时期一年时间的休养生息为2006年、2007年超级大牛市奠定了良好的基础。 
+\end_layout
+
+\begin_layout Standard
+第三轮暂停IPO发生在金融危机全面爆发之际，为期9个月。有意思的是，暂停IPO之后大盘持续上涨周期同样长达9个月。与此同时，市场活跃度也因为暂停新股扩容以及积极
+的财政政策和货币政策而大幅提升，而这一成交水平也为此后的2010年、2011年A股市场IPO融资规模连续2年荣升全球第一打下了坚实的基础。 
+\end_layout
+
+\begin_layout Standard
+第四轮A股IPO暂停，首先导致了港股IPO持续活跃，众多城商行“弃A转H”。其次互联网公司纷纷赴美上市，中概股IPO迎来小高潮，比如分类信息网站58同城、旅行网
+站去哪儿网、移动应用开发商3G门户网先后登陆美国资本市场。最后，然IPO停摆一年，但是A股市场上的抽血机一直未少，定增逾8300亿定增抽血，接近全球IPO总和。
+ 
+\end_layout
+
+\begin_layout Section
+IPO与定增融资 
+\end_layout
+
+\begin_layout Subsection
+IPO融资与定增融资三十年
+\end_layout
+
+\begin_layout Standard
+本部分我们将考虑近三十年来IPO融资额和定增融资额的份额变化，由于A股市场上融资额呈指数式增长，因此，我们先将各年度的融资额取对数，再对之作图，结果如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:IPO与定增融资30年"
+
+\end_inset
+
+所示。由于定增融资具有三个显著的便利性：一是财务指标要求比较宽松；二是可以大大地节约发行的时间成本以及资金成本；三是其认购方式十分灵活，比如可以采用除现金之外的
+股权、债券、知识产权、不动产等方式进行认购。因此从1990年到2017年，定增融资逐渐成为A股上市公司的主流融资方式。在2004年8月到2005年1月、2005
+年5月到2006年6月以及2008年12月到2009年6月期间，IPO暂停，导致公司更多地转向了定增融资方式，虽然在IPO重启之后，IPO融资额度有所回升，但定
+增融资的份额已经逐渐赶上了IPO融资额。尤其是到了2012年11月，IPO又一次暂停，此次暂停持续到了2014年1月，时长14个月，此时定增融资额已经远远超过了
+IPO融资额。此外在2014年，国家放开定增的口子，使得定增更加易于操作，成为当今融资首选操作。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/微信图片_20180519150638.png
+	lyxscale 70
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:IPO与定增融资30年"
+
+\end_inset
+
+IPO与定增融资30年
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+IPO融资与定增融资十年
+\end_layout
+
+\begin_layout Standard
+为了更加直观地对比IPO融资和定增融资，我们探究近十年两者的占比情况，结果如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:IPO与定增融资10年"
+
+\end_inset
+
+所示。图中圆圈大小表示该年度融资额的大小，圆圈中白色部分表示IPO融资的占比，蓝色部分表示定增融资的占比，颜色越深表示定增融资的比例越大。从图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:IPO与定增融资10年"
+
+\end_inset
+
+中我们可以很直观地看出以下几点：一是融资额整体呈上升趋势；二是定增融资的占比也是逐年上升，尤其是在2013年，IPO全年暂停，导致A股市场上的融资额仅由定增融资
+组成。 
+\end_layout
+
+\begin_layout Standard
+值得注意的是在2009年6月，A股IPO重启，此外加上中小企业板的快速发展以及创业板的开板，市场上掀起了一股IPO狂潮。到2010年8月，在这15个月里，A股市
+场上合计有331只股票首次公开发行，融资额高达5487.4亿元，此种现象在中国股票市场上前所未有。因此在2010年，IPO占比以及融资额较2009年均有大幅提高。
+ 
+\end_layout
+
+\begin_layout Standard
+2016年成为“A股史上第一融资年”主要原因是“定增猛于虎”的缘故。一方面，虽然新股发行数量由1、2月份的每月6家增加到12月份的48家，其发行速度明显加快，但
+是由于监管部门对IPO融资额度限制较严格，因此2016年IPO融资额总量不大，只有1615.67亿元；另一方面，随着2015年股灾导致的A股市场的持续震荡，定增折
+扣安全垫的魅力凸显，加之自2015年以来，多项政策出台推动并购重组，扩大了配套募集资金比例，导致上市公司定增募资额高达1.46万亿元，近IPO融资的10倍。
+ 
+\end_layout
+
+\begin_layout Standard
+而在2017年IPO融资占比增加，但总融资额减少。一方面是因为该年A股IPO数量大幅增长，主要原因为2016年以来，中国证监会审核速度大幅加快，从申报到发行，由
+之前的2到3年减至现在的1年，进而带动了更多的企业前来申请IPO。另一方面为了规范上市公司再融资，证监会调整上市公司的再融资规则以及发布《上市公司股东、董监高减
+持股份的若干规定》，使得定增在发行时间、发行规模、发行价格方面的限制趋严，此外2017年的解禁潮带来的减持潮，导致定增规模大减。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/微信图片_20180519150655.png
+	lyxscale 70
+	scale 70
+	rotateOrigin center
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:IPO与定增融资10年"
+
+\end_inset
+
+IPO与定增融资10年
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+A股十年行业市值及总利润分析
+\end_layout
+
+\begin_layout Subsection
+A股十年行业市值分析
+\end_layout
+
+\begin_layout Standard
+本文选取了2008年至2017年十年间，A股中十一个行业板块进行比较，其中我们以2017年的行业总市值排名作为基准。图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:左右图"
+
+\end_inset
+
+中左下方扇形区域表示历年来总市值变化情况，右上方扇形图则表示相应年份各个行业总市值占比。 
+\end_layout
+
+\begin_layout Standard
+首先从全部行业总市值上来看，十年间的总市值变化并没有明显规律，其原因是市值与牛熊市交替有着直接关系。2008年的上涨行情和2015年的上涨行情使得十年间总市值的
+分布呈现中间低两边高的态势，但是总体趋势依然保持上涨。 
+\end_layout
+
+\begin_layout Standard
+从图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:左右图"
+
+\end_inset
+
+和图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A股十年"
+
+\end_inset
+
+中可以很容易看出，十年来金融业一直占据着第一的位置，但是金融行业占比在逐年缩小。和金融行业一同萎缩的是化工行业，化工行业市值在2008年与金融行业相差无几，并占
+据第二名的位置，而到2017年则落到前三之外。同时我们可以看到，在这十年中公共事业和制造业双双崛起，占据了二三名的位置。电子设备迎头赶上，仅仅落后于化工行业占据
+第五的位置。在总市值较小的行业中，医药和服务业也保持着稳步上升的态势，但其规模仍然不及传统高市值行业。其余的行业的占比则没有明显的变化，与十年前基本持平。
+ 
+\end_layout
+
+\begin_layout Standard
+在图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A股十年"
+
+\end_inset
+
+中，颜色深浅表示该行业上市公司数量，可见制造业公司数量遥遥领先，电子设备，公共事业和化工行业紧随其后。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/微信图片_20180519221746.png
+	lyxscale 70
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:左右图"
+
+\end_inset
+
+左图：A股十年行业总市值变化图 右图：A股十年行业总利润变化图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/微信图片_20180519221742.png
+	lyxscale 47
+	scale 47
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A股十年"
+
+\end_inset
+
+A股十年行业总市值比例对比图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+A股十年行业总利润变化分析 
+\end_layout
+
+\begin_layout Standard
+本文选取了2008年至2017年十年间，A股中十一个行业板块进行比较，其中我们以2017年的行业总利润排名作为基准。图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:左右图"
+
+\end_inset
+
+中左下方扇形区域表示历年来总利润变化情况，右上方扇形图则表示相应年份各个行业总利润占比。2017年行业总利润比例排名从大到小依次是，金融，公共，化工，制造，轻制
+造，建筑，金属，电子设备，医药，服务和农业。 
+\end_layout
+
+\begin_layout Standard
+首先，从总利润变化来看十年间总利润始终在增加，十年来增加两倍多。其次，与金融业总市值占比衰减不同的是，金融业净利润占比并没有降低的迹象，足以说明金融行业盈利能力
+的强大。化工行业总利润占比则随着行业的萎缩逐渐下降。公共事业则迅速增长，从十年前不及化工行业三分之一，一跃反超化工行业。
+\end_layout
+
+\begin_layout Section
+GDP与总市值省际分布
+\end_layout
+
+\begin_layout Standard
+首先此气泡图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GDP与总市值省际分布图"
+
+\end_inset
+
+横坐标对应的是年初总市值，上一轮牛市在2007年10月16号封顶之后，A股总市值遇到了将近一年的暴跌，这也就是解释了为什么08年北京总市值如此之高，但是在接近一
+年暴跌之后，2009年A股总市值明显降低，此后A股不停地震荡，直到2014年才有牛市的表现，导致15年初总市值明显攀升；北京上海作为两个经济发达的城市，A股总市
+值比较突出，广东、浙江和江苏紧随其后，安徽、河南等地区则相对落后。 
+\end_layout
+
+\begin_layout Standard
+再来看GDP的省际分布，从图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GDP与总市值省际分布图"
+
+\end_inset
+
+中可以看出广东、浙江和江苏GDP领跑全国，这三个省都在沿海地区，地理位置得天独厚，再加上国家相关政策的大力支持、地区经济结构调整，经济发展良好，拉动GDP增长；
+ 
+\end_layout
+
+\begin_layout Standard
+福建与广东、浙江、江苏同为沿海城市，但是GDP和总市值明显低于它们，其原因可能是台湾紧邻福建，导致一系列国家政策问题，发展没有其他三个省好，但总体经济也较为发达
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/GDP2008.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GDP与总市值省际分布图"
+
+\end_inset
+
+GDP与总市值省际分布图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+A股年度涨跌幅分布
+\end_layout
+
+\begin_layout Standard
+从密度图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A股年度涨跌幅分布图1"
+
+\end_inset
+
+和图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A股年度涨跌幅分布图2"
+
+\end_inset
+
+中可以看出，2008年1570家公司中绝大部分股票价格下跌，外在因素：首要是美国次贷危机，这是影响最大的外因，导致国外金融市场的动荡和萧条，直接影响到全球的经济
+状况，中国的经济也难免不受到其影响。其次是油价的大幅上涨，现在石油对国民经济的贡献率越来越高，油价上涨导致很多行业运营成本增加，利润下降，企业压力巨大。第三就是
+周边地区的经济环境和股市环境不好！美国股市的大跌，直接导致周边股市的下挫，从而影响到国内的股市。 
+\end_layout
+
+\begin_layout Standard
+2009年1642家公司中绝大部分股票价格上涨幅度小于400%，只有27家公司年涨幅大于500%，有的上涨幅度甚至达到2000%以上； 
+\end_layout
+
+\begin_layout Standard
+2010年2016家公司股票价格涨跌幅在零左右，说明股票价格没有太大变动； 
+\end_layout
+
+\begin_layout Standard
+2011年2298家公司股票价格基本下跌，从外部因素看，欧洲债务危机蔓延，世界经济增长不确定性增加，对我国的外部需求产生直接影响，加之以油价为代表的国际大宗商品
+价格波动充满不确定性，输入性通胀压力没有得到根本消除。从内部因素看，未来通胀走势仍存在不确定性，市场对通胀是否得到根本解决存在担忧，经济增速下滑也导致对上市公司
+盈利预期的下调，A股市场可谓“熊”气弥漫。 
+\end_layout
+
+\begin_layout Standard
+2012-2013有一部分公司股票价格的涨跌幅在零左右，少数部分公司股票价格上涨。 
+\end_layout
+
+\begin_layout Standard
+2014年2577家公司中绝大部分公司股票价格上涨，但涨幅小于400%； 2015年2745家公司中绝大部分股票价格上涨，有54家公司上涨幅度大于400%,但绝
+大部分在500%左右，少数部分年涨幅高于1000%，可以看出2015年是股市牛市。 
+\end_layout
+
+\begin_layout Standard
+2016年3005家公司股票价格绝大部分下跌，有一部分上涨但涨幅小于400%，有23家公司涨幅大于400%； 
+\end_layout
+
+\begin_layout Standard
+2017年3451家公司股票价格大部分下跌，少数涨幅大于零小于400%，有16家公司年涨幅大于500%，呈现出高度分化的特征，以白马股为代表的“漂亮50”成为年
+内最亮眼的明星板块，“冰火两重天”、“漂亮50和要你命3000”等字眼被频频提及，同时周期、金融和消费等领涨板块的来回切换也多次上演。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Updown1.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A股年度涨跌幅分布图1"
+
+\end_inset
+
+A股年度涨跌幅分布图1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Updown2.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A股年度涨跌幅分布图2"
+
+\end_inset
+
+A股年度涨跌幅分布图2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:变量重要性"
+
+\end_inset
+
+是用随机森林方法做出的变量重要性图，变量重要性是根据基尼指数的平均减少量计算出的，用最大值的相对数值来表达，图中的百分比就是对涨跌幅模型解释的百分比，从图中可以
+看出市值在对模型的解释中占很大的比例，达到22.44%；ROE、净利润增长率、营收增长率、净经营现金、主营业务比例、资产负债率、ROA、每股利润、资产周转率这些变
+量也对模型的解释做出贡献，但解释比例从9.43%递减至5.5%；最近10年服务业发展良好，服务行业相关企业容易在资本市场上得到投资者的认可，故服务对模型也具有一定解
+释性；北京、广东这两大经济圈凭借着自己的地理和政策优势，地区相关企业容易得到投资者的认可，所以这两个因素对模型也就有解释比例，但是解释性并不强。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/微信图片_20180520181615.png
+	lyxscale 70
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:变量重要性"
+
+\end_inset
+
+变量重要性
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+A股板块热度
+\end_layout
+
+\begin_layout Subsection
+对比分析
+\end_layout
+
+\begin_layout Standard
+本部分我们将注意力转向于在创业板、中小板和主板上市的公司从2009年到2017年公司股价增长的数量占比情况上，据此可以看出不同板块上市公司的表现情况等。处理方式
+为：根据区间涨跌幅指标来判断公司股价是否上涨，再将同一年度已有的上市公司按照板块分类，并计算该年度股价上涨的公司数量所占各自板块的比例，由此得到的数值作为衡量板
+块热度的指标。举例：2009年创业板上市公司共计36家，其中有16家公司区间涨跌幅大于0，因此，2009年创业板热度指数为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{16}{36}=44\%
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在2009年，创业板作为一个新的板块刚刚推出，其上市公司数量较少，仅36家，大部分公司处于成长期，因此创业板的表现弱于中小企业板和主板。与之相对的是，该年度，中
+小企业板和主板则分别有327家和1306家上市公司，虽然在经历了2008年的金融危机之后，中小板和主板均受重创，但国家提出“四万亿救市计划”，使得中小板和主板在
+2009年能够换血新生，形势一片大好。因此从图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:2009年板块热度仪表板"
+
+\end_inset
+
+中我们可以看到，创业板的热度指数仅为44%，而中小企业板和主板均超过90%。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Gauge2009.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:2009年板块热度仪表板"
+
+\end_inset
+
+2009年板块热度仪表板
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+而在2011年，市场大跌，创业板、中小企业板和主板的热度指数分别为12%、7%和8%。其原因有以下几点：一是限售股的解禁，股票市场实现全流通，解禁之后进行减持则
+会导致股价下跌；二是证监会继续提高资本市场对经济发展扶持的力度，使得新股发行居高不下；三、人民币升值、美元贬值以及欧元区危机持续蔓延，各国的主权信用评级也在遭到
+国际评级机构的下调等一系列的国际国内因素。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Gauge2011.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2011年板块热度仪表板
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在2013年，创业板领衔牛市热度指数高达93%，而主板却节节溃败，热度指数仅有58%。创业板表现如此良好，主要有以下几点，一是宏观经济转型，主打经济结构调整、淘
+汰过剩产能、金融领域去杠杆等一系列经济转型命题，在此环境下新兴产业势必会在资源再配置中处于优势地位；二是新股发行暂停提升稀缺性溢价，过去一年，A股新股发行处于暂
+停状态，这直接导致以往新股上市节奏较快的创业板、中小板突然失去了供给压力，这使得此类股票的“壳资源”价值得到了明显提升。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Gauge2013.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2013年板块热度仪表板
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在2014年，IPO重启、央行降息、国企改革、国务院发布“新国九条”、 沪港通正式运行等一系列的政策出台之后，造成了A股的牛市，此外此现象一直持续到了2015年
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Gauge2014.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2014年板块热度仪表板
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在2016年，市场再次出现暴跌现象，创业板、中小企业板和主板的热度指数从2015年的98%、97%和85%降至32%、31%和30%。其背后的原因主要是2015
+年上半年的牛市实际上是建立在高杠杆之上的牛市，此外，除了正规的融资融券之外，有大量不受监管的场外配资迅速流入股市，而在2015年6月初，证监会开始采取措施去杠杆
+，包括禁止未批准的融资融券活动、要求自查场外配资、禁止券商为场外配资提供便利，关闭所有恒生订单管理系统（HOMS）接口。由此导致A股市场一路暴跌。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/Gauge2016.png
+	lyxscale 50
+	scale 50
+	BoundingBox 0bp 0bp 500bp 500bp
+	groupId Rproject
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2016年板块热度仪表板
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+综合来看，从2009年到2017年，三大板块均呈现出了“深V”走势，即在大涨之后必有大跌，大跌之后又有大涨。
+\end_layout
+
+\begin_layout Subsection
+方差分析
+\end_layout
+
+\begin_layout Standard
+在了解了创业板、中小企业板和主板的热度指数之后，同样地，我们针对三个板块的上市公司中上涨与否做了单因素方差分析，得到结果如下表。从表中我们可以看出，在
+\begin_inset Formula $\alpha=0.05$
+\end_inset
+
+的显著性水平下，除了2016年和2017年，其余年份均拒绝原假设，即创业板、中小企业板和主板在公司的上涨与否间存在着显著性差异。此外对于2011年市场大跌来说，
+创业板受创程度较主板和中小企业板较浅，而在2016年市场暴跌，三大板块均受重创，2017年亦如此。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+三个板块的单因素方差分析结果表
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+年份
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+板块自由度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+公司数自由度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+F值
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P值
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是否显著（
+\begin_inset Formula $\alpha=0.05$
+\end_inset
+
+）
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2009
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1666 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+142.32 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+<2.2e-16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2010
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2014
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.493 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+<2.101e-17 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2011
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2295
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.3974
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.03363 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2012
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 2450 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.891
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.78e-10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2013
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2452 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+102.94
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+<2.2e-16 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2014
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2576
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.76 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.04e-09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2015
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2799
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+66.171
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+<2.2e-16 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+是
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2016
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 3026
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2353 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.7904
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+否
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2017
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 3464 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.657 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 0.0703
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+否
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+易宪容.从IPO重启看中国股市改革思路：真正约束发行审核权力,股市才能健康发展[J].中国经济周刊,2015(47):68-69.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+李若愚.IPO重启影响几何?[J].现代商业银行,2009(07):18-20.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+劳佳迪.今年上半年A股IPO大降:交易宗数同比缩水2/3 筹资规模缩水八成[J].中国经济周刊,2016(27):56-57.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+.马光远.改革不彻底IPO还会暂停[J].新财经,2009(07):57.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-5"
+
+\end_inset
+
+宋玉,沈吉,范敏虹.上市公司的地理特征影响机构投资者的持股决策吗?——来自中国证券市场的经验证据[J].会计研究,2012(07):72-79+97.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-6"
+
+\end_inset
+
+洪叶茂林,吴振信,吴永林.对我国上市公司地区分布的实证分析[J].数量经济技术经济研究,2003(10):112-116.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-7"
+
+\end_inset
+
+王中华.中国各省区市创业板上市公司分布与GDP的关系分析[J].经济研究导刊,2013(03):68-74+86.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-8"
+
+\end_inset
+
+洪伟.中国股票市场行业价值变迁分析[J].商,2012(21):112.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-9"
+
+\end_inset
+
+杨霞.
+ 定增规模超万亿，发行机制亟待完善[N].
+ 证券时报,2016-11-17(A08).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-10"
+
+\end_inset
+
+施光耀,刘国芳,王华.市值编年下的股市19载——写在建国60周年之际[J].资本市场,2009(10):42-44.
+\end_layout
+
+\end_body
+\end_document

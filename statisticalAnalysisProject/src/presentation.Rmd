@@ -1,0 +1,494 @@
+---
+title: <font style="font-family:Kaiti SC;color:#8A2BE2;font-size:70px" >A 股 面 面 观 </font>
+author: <font style="font-family:Kaiti SC;color:#8A2BE2" > 庄庆斌  &nbsp;张春光 &nbsp; 唐银银 &nbsp; 徐贺超 &nbsp; 胡娟</font>
+output: 
+  ioslides_presentation:
+    incremental: false
+    widescreen: true
+    smaller: true
+    transition: slower
+    fig_caption: true
+    self_contained: yes
+    css: test.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+```{css}
+slide {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+```
+
+```{r deps,include=FALSE}
+# this ensures jquery is loaded
+dep <- htmltools::htmlDependency(name = "jquery", version = "1.11.3", src = system.file("rmd/h/jquery-1.11.3", package='rmarkdown'), script = "jquery.min.js")
+htmltools::attachDependencies(htmltools::tags$span(''), dep)
+```
+
+```{js move-id-background-color}
+$(document).ready(function(){
+    // for every article tag inside a slide tag
+    $("slide > article").each(function(){
+        // copy the article name to the parentNode's (the slide) ID
+        this.parentNode.id=$(this).attr('name');
+    });
+});
+```
+
+```{r background-function,include=FALSE}
+makeBG <- function(id, file)
+{
+    cat(
+        sprintf('<style type="text/css">\n#%s {\nbackground-image: url(%s);\n}\n</style>',
+                id, knitr::image_uri(file))
+    )
+}
+```
+
+
+
+
+
+## {.SlideClass #SlideID name=ThisSlide }
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+<div id="header" style="height:50px;width:1000px;float:left;">
+</div>
+
+ 
+<div id="left" style="height:400px;width:300px;float:left;">
+</div>
+ 
+<div id="content" style="height:400px;width:700px;float:left;">
+  
+  <font id="content" size=10>目录</font> 
+  
+  <br><br><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="list.png" width="15" height="15" />
+  <font id="content1" size=5>研究简介</font> 
+  
+  <br><br><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="list.png" width="15" height="15" />
+  <font id="content1" size=5>图表分析</font> 
+  
+  <br><br><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="list.png" width="15" height="15" />
+  <font id="content1" size=5>结论建议</font> 
+</div>
+
+
+
+</div>
+
+
+## {.SlideClass #SlideID name=ThisSlide }
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+<div id="header" style="height:200px;width:1000px;float:left;">
+</div>
+
+ 
+<div id="left" style="height:200px;width:380px;float:left;">
+</div>
+ 
+<div id="content" style="height:200px;width:620px;float:left;">
+<font id='title' size=20> 研究简介</font>
+</div>
+
+
+
+</div>
+
+
+
+
+## 研究背景  {.SlideClass #SlideID name=ThisSlide }
+
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div style="height:400px;width:100px;float:left;">
+</div>
+<div style="height:400px;width:700px;float:left;">
+
+- <font >A股的正式名称是人民币普通股票。它是由我国境内的公司发行，供境内机构、组织或个人(不含台、港、澳投资者)以人民币认购和交易的普通股股票。</font>
+<br>
+<br>
+- <font>从1990年上交所成立截止目前A股市场已经有3516家上市公司，遍布民生、国防、金融等主要领域。</font>
+<br>
+<br>
+- <font>纵横A股30年，牛熊交替发展，市场跌宕起伏，伴随着中国企业的逐渐成熟壮大。</font>
+
+</div>
+
+
+## 研究目的  {.SlideClass #SlideID name=ThisSlide }
+
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div style="height:500px;width:100px;float:left;">
+</div>
+<div style="height:500px;width:700px;float:left;">
+
+- <font >了解 A 股市场从 1990 年到现在的发展历程。</font>
+
+<br>
+
+- <font>探究 IPO 政策对 A 股市场以及不同地区上市公司的影响。</font>
+
+<br>
+
+- <font>找寻市场市值、GDP 和城市三者之间的关系，了解 A 股市场的涨跌情况。</font>
+
+<br>
+
+- <font>分析 A 股市场上创业板、中小企业板和主板之间在受到冲击时影响的相似性和差异 性。</font>
+
+<br>
+
+- <font>A 股市场在不同行业之间市值和利润的变化情况，国家政策对定增融资发展以及 IPO 融资与定增融资关系的影响。</font>
+
+</div>
+
+
+
+## {.SlideClass #SlideID name=ThisSlide }
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+<div id="header" style="height:200px;width:1000px;float:left;">
+</div>
+
+ 
+<div id="left" style="height:200px;width:380px;float:left;">
+</div>
+ 
+<div id="content" style="height:200px;width:620px;float:left;">
+<font id='title' size=20> 图表分析</font>
+</div>
+
+
+
+</div>
+
+
+
+##  A股三十年 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+
+
+```{r,echo=FALSE,fig.height=5.3,fig.width=9,,fig.align='center'}
+library(recharts)
+library(magrittr)
+load('map_data.rdata')
+
+splitList <-list(
+    list(start=1, end=1, label='1', color='#ADD8E6'),
+    list(start=2, end=2, label='2', color='#87CEFA'),
+    list(start=3, end=3, label='3', color='#00BFFF'),
+    list(start=4, end=6, label='4--6', color='#4682B4'),
+    list(start=7, end=11, label='7--11', color='#0000CD'),
+    list(start=12, end=98, label='>=12', color='#00008B')
+)    
+
+echartr(map_data, prov, count, t=year, type="map_china") %>%
+  setDataRange(splitList=splitList,pos=3) %>%
+  #setTimeline(y=50,autoPlay = T,playInterval=300) %>%
+  setTimeline(playInterval=500,height ="30px") %>%
+  #setToolbox(pos=3) %>%
+  setToolbox(show = F) %>%
+  setSeries(showLegendSymbol=F) %>%
+  setLegend(show=F) %>%
+  setTitle('上市公司数',pos=12)
+```
+
+
+
+##  IPO与定增融资 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+
+<div id="left" style="height:450px;width:100px;float:left;">
+</div>
+
+<div id="center" style="height:450px;width:800px;float:left;">
+<img src="IPO30.png" width="800" height="450" />
+</div>
+
+<div id="right" style="height:450px;width:100px;float:left;">
+</div>
+</div>
+
+
+
+##  IPO与定增融资 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+
+<div id="left" style="height:450px;width:100px;float:left;">
+</div>
+
+<div id="center" style="height:450px;width:800px;float:left;">
+<img src="IPO10.png" width="800" height="450" />
+</div>
+
+<div id="right" style="height:450px;width:100px;float:left;">
+</div>
+</div>
+
+
+
+
+##  A股行业分布 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+
+<div id="left" style="height:450px;width:100px;float:left;">
+</div>
+
+<div id="center" style="height:450px;width:800px;float:left;">
+<img src="Industry.png" width="800" height="450" />
+</div>
+
+<div id="right" style="height:450px;width:100px;float:left;">
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+##  A股省际分布市值 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+```{r,echo=FALSE,fig.height=5.3,fig.width=9,,fig.align='center'}
+library(recharts)
+library(magrittr)
+load('GDP_data.rdata')
+#GDP_data <- GDP_data[GDP_data$prov %in% c('北京','福建','广东','上海','浙江'),]
+
+echartr(GDP_data, capital,GDP,t=year,series = prov,type='bubble') %>% 
+  #c('circle', 'rectangle', 'triangle', 'diamond', 'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond')
+  setSeries(series = '福建',symbol='star',itemStyle=list(normal=itemStyle(color='red')),symbolSize=20) %>%
+  setSeries(series = '北京',symbol='diamond',symbolSize=20) %>%
+  setSeries(series = '上海',symbol='diamond',symbolSize=20) %>%
+  setSeries(series = '广东',symbol='diamond',symbolSize=20) %>%
+  setSeries(series = '浙江',symbol='circle',symbolSize=20) %>%
+  setSeries(series = '山东',symbol='circle',symbolSize=20) %>%
+  setSeries(series = '江苏',symbol='circle',symbolSize=20) %>%
+  setSeries(series = '河南',symbol='circle',symbolSize=20) %>%
+  setSeries(series = '安徽',symbol='circle',symbolSize=20) %>%
+  setSeries(series = '湖南',symbol='circle',symbolSize=20) %>%
+  setXAxis(name='总市值(亿)',max=1.05*max(GDP_data$capital),min=0,axisLabel=list(formatter="%d")) %>%
+  setYAxis(name='GDP(亿)',max=1.05*max(GDP_data$GDP),min=0) %>%
+  setToolbox(show = F) %>%
+  setLegend(pos = 3,itemGap = 20) %>%
+  setTitle('GDP-总市值省际分布',pos=12) %>%
+  setTimeline(playInterval=350)
+
+
+```
+
+
+
+##  A股市值-利润 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+
+<div id="left" style="height:450px;width:150px;float:left;">
+</div>
+
+<div id="center" style="height:450px;width:700px;float:left;">
+
+<img src="MV-P.png" width="700" height="450" />
+</div>
+
+<div id="right" style="height:450px;width:150px;float:left;">
+</div>
+</div>
+
+
+
+##  A股年度涨跌分布 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<img src="updown_pic1.png" width="480" height="380" />
+<img src="updown_pic2.png" width="480" height="380" />
+
+##  涨幅重要性变量 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+<img src="importance.png" width="1000" height="450" />
+
+
+##  A股板块热度  {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+```{r,echo=FALSE,fig.align='center',fig.width=10,fig.height=5}
+library(recharts)
+library(magrittr)
+load("gauge.rdata")
+
+echartr(gauge_data, ban, percent, facet=ban,type='gauge',t=year)%>% setTitle('板块热度仪表板',pos=12) %>%
+  setToolbox(show = F) %>%
+  setSeries(legendHoverLink=F,splitNumber=4,
+            title=list(show=TRUE, offsetCenter=list(0, '130%'), textStyle=list(color='#333', fontSize=25)),
+            axisLabel=list(show=TRUE,offsetCenter=list(5, '120%') ),axisTick=list( show=TRUE, splitNumber=5, length=6, lineStyle=list( color='#eee', width=1, type='solid')),
+            axisLine=list( show=TRUE, lineStyle=list(color=list(list(0.2, '#228b22'), list(0.8, '#48b'), list(1, '#ff4500')), width=20)),
+            splitLine=list(show=TRUE, length=20, lineStyle=list( color='#eee', width=2, type='solid')),
+            axisLabel=list(show=TRUE, formatter='', textStyle=list(color='auto')),
+            detail=list(show=TRUE, backgroundColor='rgba(0,0,0,0)', borderWidth=0, borderColor='#ccc', width=80, height=40, offsetCenter=list(0, '40%'), formatter=NULL, textStyle=list(color='auto', fontSize=30))
+            ) %>%
+  setTimeline(playInterval = 400) %>%
+  setLegend(show=F) 
+```
+
+##  板块涨跌方差分析表  {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+```{r,echo=FALSE,warning=FALSE}
+library(DT)
+load('aov_result_data.rdata')
+aov_result_data$p <- as.numeric(aov_result_data$p)
+colnames(aov_result_data) <- c('年份','自由度1','自由度2','F值','P值')
+aov_result_data <- aov_result_data[aov_result_data$'年份'!=2008,]
+DT::datatable(aov_result_data,rownames = F)
+```
+
+
+
+
+
+
+## A股十年涨跌榜 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+```{r,echo=FALSE}
+library(DT)
+load('d1_tmp.rdata')
+DT::datatable(d1_tmp,rownames = F)
+```
+
+
+## A股十年涨跌榜 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+```{r,echo=FALSE}
+library(DT)
+load('d2_tmp.rdata')
+DT::datatable(d2_tmp,rownames = F)
+```
+
+
+
+
+## {.SlideClass #SlideID name=ThisSlide }
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+<div id="container" style="width:1000px">
+<div id="header" style="height:200px;width:1000px;float:left;">
+</div>
+
+ 
+<div id="left" style="height:200px;width:380px;float:left;">
+</div>
+ 
+<div id="content" style="height:200px;width:620px;float:left;">
+<font id='title' size=20> 结论建议</font>
+</div>
+
+
+
+</div>
+
+## 结论建议 {.SlideClass #SlideID name=ThisSlide }
+
+```{r results='asis',echo=FALSE}
+makeBG(id='ThisSlide', 'background.jpg')
+```
+
+
+<div style="height:400px;width:100px;float:left;">
+</div>
+<div style="height:400px;width:700px;float:left;">
+
+- <font >通过单因素方差分析可以发现板块间的涨跌存在显著差异。</font>
+<br>
+<br>
+- <font>通过随机森林输出变量重要性，结果表明影响股票涨跌的主要因素主要在于发行主体的财务状况，如市值、ROE、净利润增长率等财务指标对股票的涨跌起着关键的作用。</font>
+<br>
+<br>
+- <font>通过一系列图文、统计分析，A股市场的体量与质量均有提升，作为上市公司实践股东利益最大化的最有效途径是实施有效的管理、提升企业经营业绩。</font>
+
+</div>
