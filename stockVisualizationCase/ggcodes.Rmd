@@ -1,0 +1,482 @@
+---
+title: "Untitled"
+author: "Francis"
+date: "2018年1月31日"
+output: word_document
+---
+
+```{r setup, message=TRUE,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 读取数据
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,eval=TRUE,fig.showtext=TRUE}
+#A股数据
+library(xlsx)
+stock <- read.xlsx("examples/stock2017.xlsx",sheetName="2017",header=T,
+                   encoding='UTF-8',check.names = FALSE)
+library(magrittr);library(lubridate)
+stock <- stock[year(stock$ipo)< 2018,][1:3467,]  %>%  subset(.,mv17>0&mv18>0)
+stock$mv17_d <- cut(stock$mv17,breaks=c(0,50,100,200,500,1000,16000),
+                    labels=c('0-50','50-100','100-200','200-500','500-1000','>1000'),
+                    right=FALSE,include.lowest=TRUE)
+stock$change_d <- cut(stock$change,breaks=c(-100,-20,0,20,50,400),
+                      labels=c('<-20%','-20~0%','0~20%','20~50%','>50%'),
+                      right=FALSE,include.lowest=TRUE)
+stock$board<- factor(stock$board,levels = c('主板','中小企业板','创业板'),
+                     labels=c('主板','中小板','创业板'),ordered=T)
+```
+
+# 自定义主题
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,eval=TRUE,fig.showtext=TRUE}
+library(ggplot2)
+windowsFonts(myfont=windowsFont("sans"))
+windowsFonts(itfont=windowsFont("Time New Roman"))
+theme_os <- function(base_size=10,title_family='myfont',base_family='itfont',
+                     base_fill='white',base_color='white',margin_number=5,base_lty=0,
+                     top=TRUE,sd_size=1){
+  theme(
+    #主题元素
+    line = element_line(colour = 'black'),
+    rect = element_rect(fill=base_fill,linetype=1),
+    text = element_text(colour='black',family = base_family),
+    #图表元素
+    plot.background = element_rect(fill=base_fill,colour = base_color), 
+    plot.title = element_text(size = sd_size*base_size,hjust = 0,face = "bold"),
+    plot.caption = element_text(size = 0.5*base_size,hjust=0,family = title_family),
+    plot.margin = unit(c(6,5,6,5)*2*sd_size,'points'),
+    #面板元素
+    panel.background = element_rect(fill='white',linetype = base_lty),
+    panel.border = element_blank(),
+    panel.grid.major.x = element_line(color = 'white',size=rel(0.75)),
+    panel.grid.major.y = element_line(color = 'grey97',size=rel(0.75)),  
+    panel.grid.minor = element_blank(),
+    panel.spacing = unit(0.25,'lines'),
+    #坐标轴线
+    axis.line = element_line(size = rel(0.8)),
+    axis.line.y = element_line(),axis.line.x = element_line(linetype = 1),
+    #轴标题
+    axis.title = element_text(size=0.8*sd_size*base_size,family = title_family),
+    axis.title.x = element_text(), 
+    axis.title.y = element_text(angle = 90,margin = margin(r=base_size,unit = "pt")),
+    #轴刻度标签
+    axis.text = element_text(size = 0.7*sd_size*base_size), 
+    axis.text.x = element_text(vjust = 0,margin = margin(t = base_size,unit = "pt")), 
+    axis.text.y = element_text(hjust = 0,margin = margin(r = base_size,unit = "pt")),
+    #轴刻度
+    axis.ticks = element_line(),axis.ticks.y = element_line(),
+    axis.ticks.length = unit(0.2*base_size, "points"),
+    #图例
+    legend.background = element_rect(linetype = 0,fill=base_fill),
+    legend.margin = margin(1.2,1,1.2,1,'pt'),
+    legend.key = element_rect(linetype = 0),
+    legend.key.size = unit(0.8*sd_size,"lines"),
+    legend.key.height = unit(0.8*sd_size,"lines"),
+    legend.key.width = unit(0.8*sd_size,"lines"),
+    legend.title = element_text(size = 0.8*sd_size*base_size,family = title_family),
+    legend.title.align = 0,
+    legend.text = element_text(size=0.8*sd_size*base_size,family=base_family),
+    legend.text.align = 0,
+    legend.position = "top",
+    legend.justification = "center", 
+    #分面
+    strip.background = element_rect(fill = 'lightgrey',linetype = 0,size = 0.8*sd_size), 
+    strip.text= element_text(size =0.8*sd_size*base_size,face='bold',family='myfont_att'),
+    strip.text.x = element_text(), 
+    strip.text.y = element_text(angle = -90)  
+  )
+}
+#上证50成分
+sz50 <-  read.xlsx('examples/SZ50.xlsx',sheetName="SZ50",header=T,encoding='UTF-8',
+                   check.names = FALSE)  %>%  set_colnames(c('code','company','control'))
+stock_sz50 <- subset(stock,company %in% sz50$company)
+```
+
+#散点图
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE,fig.showtext=TRUE}
+d_1 <- ggplot(stock,aes(x=mv17,y=change))+geom_point(aes(color=change),size=1)+
+  geom_hline(yintercept = 0,size=0.5,color='grey')+
+  labs(title='2017A股市值-涨跌幅分布图',x='2017市值/亿',y='涨跌幅/%')+
+  scale_color_gradient2(low='#006837',mid = '#F0FFFF',high='#A50026')+
+  theme_os(sd_size =1.8) %+replace% theme(legend.position = 'none')+
+  scale_x_log10(breaks=c(0,50,100,200,1000,2000,5000))+ylim(-100,200)+
+  stat_density2d(color='grey')
+d_1 
+```
+
+#指数分布
+
+## 分页直方图
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+d2 <- ggplot(stock,aes(x=change,fill=board))+ #分组并列柱形图
+  geom_histogram(aes(y=..density..),bins=100)+facet_grid(board~.,scales='free_y')+
+  labs(title='沪深指数涨跌',x='涨跌幅',y='频率')+
+  scale_x_continuous(breaks=seq(-100,400,50),expand=c(0.02,0.02))+
+  theme_os(sd_size = 1.8)+guides(fill=FALSE)+
+  scale_fill_manual(values=c('#023858','#A6BDDB','#0570B0'))#
+d2_1 <- ggplot(stock_sz50,aes(x=change),alpha=0.2,size=0.2)+
+  labs(title='上证50涨跌')+
+  geom_histogram(aes(y=..density..),bins=30,fill='grey50')+
+  geom_vline(xintercept = 0,color='white')+
+  theme_os(sd_size = 1.2)
+library(grid)
+vp <- viewport(x=0.72,y=0.82,width=0.36,height=0.36)#用viewport函数指定子图的大小的位置
+d2
+print(d2_1,vp=vp)
+```
+
+## 市值变化
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+library(plyr)
+stock_mv <- ddply(stock,.(board),summarise,mv17_t=sum(mv17),mv18_t=sum(mv18))%>%
+  rbind(.,cbind(board='上证50',ddply(stock_sz50,.(board),
+                                   summarise,mv17_t=sum(mv17),mv18_t=sum(mv18))[,2:3]))
+stock_mv$x2017 <- stock_mv$mv17_t/stock_mv[1,2]*100
+stock_mv$x2018 <- stock_mv$mv18_t/stock_mv[1,2]*100
+library(reshape2)
+stock_mv <- melt(stock_mv,id.vars = c('board','mv17_t','mv18_t'))
+stock_mv$ymax <- stock_mv$value*10/max(stock_mv$value) 
+stock_mv$xmin <- rep(c(0,8),each=4)
+stock_mv$xmax <- rep(c(2,10),each=4)
+stock_mv$xlab <- (stock_mv$xmin+stock_mv$xmax)/2
+stock_mv <- plyr::arrange(stock_mv,-value)
+poly <- cbind(board=rep(as.character(unique(stock_mv$board)),each=4),
+              data.frame(matrix(c(8,10,8,3.96,2,3.1684,2,8.996,
+                                  2,3.1684,8,3.96,8,2.2757,2,2.2475,
+                                  8,2.2757,2,2.2475,2,1.1875,8,0.9946,
+                                  2,1.1875,8,0.9946,8,0,2,0),
+                                nrow=16,byrow = T)))%>%
+  set_colnames(c('board','lat','long'))
+d3 <- ggplot()+
+  geom_rect(data=stock_mv,aes(xmin=xmin,xmax=xmax,ymin=0,ymax=ymax,fill=board),
+            colour='white')+
+  geom_text(data=stock_mv,aes(x=xlab,y=ymax-0.5,label=round(value/100*395902/10000,2)),
+            size=3.5,colour='white',vjust=0)+
+  geom_text(aes(x=c(1,9),y=c(9.3,10.3)),label=c('2017总市值','2018总市值'),size=4)+
+  geom_polygon(data=poly,aes(x=lat,y=long,fill=board),color='white')+
+  guides(fill=guide_legend(title=NULL))+
+  scale_fill_manual(values=c("#0579AD","#0899DA","#519F46","#C7C8CC"))+
+  labs(title="2017-2018指数总市值变化:万亿",caption="DataResoure:Wind")+
+  theme_os(base_size=10,base_family="myfzhzh") %+replace%
+  theme(legend.position=c(.3,.95),
+        legend.text = element_text(size=10),
+        legend.direction ="horizontal",
+        axis.line.x=element_blank(),axis.line.y = element_blank(),
+        axis.text.x=element_blank(),axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),
+        axis.title.x = element_blank(),axis.title.y = element_blank(),
+        plot.title=element_text(size=16,hjust=0.08),
+        plot.caption=element_text(size=10,hjust=0),
+        plot.margin=margin(10,0,10,0,unit="pt"))
+d3
+```
+
+## 仪表盘图
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+library(sca)
+bardata<-seq(from=0,to=270,length=1000)
+rectdata<-seq(from=0,to=270,by=27)%>%c(360)
+target<- c(0.0800+0.057+0.126,0.067+0.051+0.113,0.04+0.031+0.074)
+assist <- target*270
+d4 <- ggplot(data=NULL)+
+  geom_rect(aes(xmin=rectdata[-12],xmax=rectdata[-1],ymin=5,ymax=10),
+            fill="#F2F2F2",col="white")+
+  geom_bar(aes(x=bardata,y=5,col=bardata),stat="identity",fill=NA,size=2)+
+  geom_text(aes(x=rectdata[-12],y=10,label=seq(0,100,by=10)),
+            vjust=.5,hjust=.5,size=3,col="#0F1110")+
+  geom_segment(aes(x=assist[1],y=-50,xend=assist[1],yend=-10),
+               arrow =arrow(length=unit(0.4,"cm")),size=1.2,col="#228B22")+
+  geom_point(aes(x=assist[1],y=-50),shape=21,fill="white",col="black",size=5)+
+  annotate("text",x=315,y=-30,label=percent(target[1]),size=4,hjust=.5,vjust=.5,
+           col=ifelse(target[1]>.5,"#F32626","#38E968"),fontface="plain")+ 
+  annotate("text",x=315,y=-15,label="上证",size=4,hjust=.5,vjust=.5)+ 
+  ylim(-50,12)+
+  coord_polar(theta="x",start=179.85)+
+  scale_colour_gradient(low="#38E968",high="#F32626",guide=FALSE)+
+  theme_minimal()+
+  theme(
+    text=element_blank(),
+    line=element_blank(),
+    rect=element_blank()
+  )
+d5 <- ggplot(data=NULL)+
+  geom_rect(aes(xmin=rectdata[-12],xmax=rectdata[-1],ymin=5,ymax=10),
+            fill="#F2F2F2",col="white")+
+  geom_bar(aes(x=bardata,y=5,col=bardata),stat="identity",fill=NA,size=2)+
+  geom_text(aes(x=rectdata[-12],y=10,label=seq(0,100,by=10)),
+            vjust=.5,hjust=.5,size=3,col="#0F1110")+
+  geom_segment(aes(x=assist[2],y=-50,xend=assist[2],yend=-10),
+               arrow =arrow(length=unit(0.4,"cm")),size=1.2,col="green3")+
+  geom_point(aes(x=assist[2],y=-50),shape=21,fill="white",col="black",size=5)+
+  annotate("text",x=315,y=-30,label=percent(target[2]),size=4,hjust=.5,vjust=.5,
+           col=ifelse(target[2]>.5,"#F32626","#38E968"),fontface="plain")+ 
+  annotate("text",x=315,y=-15,label="中小板",size=4,hjust=.5,vjust=.5)+ 
+  ylim(-50,12)+
+  coord_polar(theta="x",start=179.85)+
+  scale_colour_gradient(low="#38E968",high="#F32626",guide=FALSE)+
+  theme_minimal()+
+  theme(
+    text=element_blank(),
+    line=element_blank(),
+    rect=element_blank()
+  )
+d6 <- ggplot(data=NULL)+
+  geom_rect(aes(xmin=rectdata[-12],xmax=rectdata[-1],ymin=5,ymax=10),
+            fill="#F2F2F2",col="white")+
+  geom_bar(aes(x=bardata,y=5,col=bardata),stat="identity",fill=NA,size=2)+
+  geom_text(aes(x=rectdata[-12],y=10,label=seq(0,100,by=10)),
+            vjust=.5,hjust=.5,size=3,col="#0F1110")+
+  geom_segment(aes(x=assist[3],y=-50,xend=assist[3],yend=-10),
+               arrow =arrow(length=unit(0.4,"cm")),size=1.2,col="#00FF00")+
+  geom_point(aes(x=assist[3],y=-50),shape=21,fill="white",col="black",size=5)+
+  annotate("text",x=315,y=-30,label=percent(target[3]),size=4,hjust=.5,vjust=.5,
+           col=ifelse(target[3]>.5,"#F32626","#38E968"),fontface="plain")+ 
+  annotate("text",x=315,y=-15,label="创业板",size=4,hjust=.5,vjust=.5)+ 
+  ylim(-50,12)+coord_polar(theta="x",start=179.85)+
+  scale_colour_gradient(low="#38E968",high="#F32626",guide=FALSE)+
+  theme_minimal()+
+  theme(
+    text=element_blank(),
+    line=element_blank(),
+    rect=element_blank()
+  )
+library(Rmisc)
+multiplot(d4,d5,d6,cols=3)
+```
+
+#行业分布
+
+##树状图
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+library(treemapify)
+library(tweenr)
+library(gganimate)
+library(RColorBrewer)
+stock_ind <- ddply(stock,.(w_ind1,w_ind2),summarize,
+                   mv_tot17=sum(mv17,na.rm = T),
+                   mv_tot18=sum(mv18,na.rm = T),
+                   pe_17=weighted.mean(pe17,na.rm = T),
+                   pe_18=weighted.mean(pe18,na.rm = T),
+                   counts=length(company)) %>%
+  set_colnames(c('WindOne','WindTwo','MV2017','MV2018','2017PE','2018PE','Counts'))
+d_7 <- ggplot(stock_ind,aes(area=MV2018,label=WindTwo,subgroup=WindOne))+
+  geom_treemap(aes(fill=Counts),color='white')+
+  geom_treemap_text(fontface='italic',size=12,colour='black',
+                    place='topleft',reflow=T,alpha=0.9)+
+  geom_treemap_subgroup_border(colour='grey20',size=1)+
+  geom_treemap_subgroup_text(size=20,colour="grey20",
+                             place="centre",reflow=T,alpha=0.5)+
+  scale_fill_distiller('',palette='Blues',direction=1)+guides(fill=FALSE)+
+  labs(title='2018上市企业市值行业分布',
+       captions='注:格子面积与行业市值正比,颜色深度与行业企业数正比')+
+  theme(plot.caption = element_text(hjust=0,size=8,color='grey50'),
+        plot.title = element_text(hjust=0.5,size=16)) 
+d_7
+```
+
+##直方图
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(scales)
+stock_ind2 <- ddply(stock,.(w_ind2,change_d),summarize,count2=length(company))%>%
+  plyr::join(.,ddply(stock,.(w_ind2),summarize,count=length(company)),
+             by='w_ind2',type='full')
+stock_ind2$per <- round(stock_ind2$count2/stock_ind2$count*100,2)
+d8 <- ggplot(data=stock_ind2,aes(x=w_ind2,y=per,fill=change_d))+
+  geom_bar(stat='identity',width=0.95)+
+  geom_text(aes(x=w_ind2,y=100,label=w_ind2),size=2.8,
+            color='grey6',angle=-90,vjust=0.2,hjust=1)+
+  scale_x_discrete(limits=plyr::arrange(stock_ind2,change_d,-per)$w_ind2[1:24])+
+  scale_fill_brewer('涨跌幅',palette = 'Blues')+
+  ylim(0,118)+
+  theme(text=element_text(size=8),
+        line=element_blank(),
+        rect=element_blank(),
+        axis.text=element_blank(),
+        axis.title=element_blank(),
+        legend.position='right',
+        legend.direction='vertical',
+        legend.justification = 0.1,
+        legend.text.align = 1,
+        legend.key.size=unit(.4,'cm'),
+        legend.key.height = unit(1,'cm'),
+        legend.box.margin = unit(c(0,0,0,0),'points'),
+        plot.title = element_text(size=12),
+        plot.margin = unit(c(0,0,1,2),'lines'))
+d8
+```
+
+
+# 地图
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+#中国地图
+library(maptools)
+library(rgdal) 
+map_data_china <- rgdal::readOGR('DataWarehouse-master/Rstudy/CHN_adm/bou2_4p.shp')
+map_province <- map_data_china@data  %>%  data.frame(.,id=seq(0:924)-1)#省份信息
+library(ggplot2)
+map_china <- fortify(map_data_china)  %>%  plyr::join(.,map_province,type='full')#地图转化为数据框
+#省会信息
+map_city_data <- read.csv('DataWarehouse-master/Rstudy/CHN_adm/chinaprovincecity.csv')%>% set_colnames(c('NAME','city','long','lat','index','class'))
+# CHN_adm <- rgdal::readOGR("DataWarehouse-master/Rstudy/CHN_adm/CHN_adm2.shp",encoding = 'gbk')
+# map_data_c2 <- readShapePoly('DataWarehouse-master/Rstudy/CHN_adm/bou2_4p.shp') 
+library(plyr)
+stock_province_mv <- ddply(stock,.(province),summarize,mv_total=sum(mv18)) %>% 
+  set_colnames(c('NAME','mv_total'))
+stock_count <- data.frame(table(stock$province))  %>%  set_colnames(c('NAME','count'))  %>%  
+  plyr::join(stock_province_mv,.,by='NAME')
+library(stringr)
+map_china$NAME <- map_china$NAME %>% as.character(.) %>% str_sub(.,1,2)  %>%  
+  str_replace(.,'黑龙','黑龙江') %>% str_replace(.,'内蒙','内蒙古') %>% as.factor(.)
+stock_count$NAME <- stock_count$NAME %>% as.character(.) %>% str_sub(.,1,2) %>% 
+  str_replace(.,'黑龙','黑龙江') %>% str_replace(.,'内蒙','内蒙古') %>% as.factor(.)
+map_city_data$NAME <- map_city_data$NAME %>% as.character(.) %>% str_sub(.,1,2) %>% 
+  str_replace(.,'黑龙','黑龙江') %>% str_replace(.,'内蒙','内蒙古') %>% as.factor(.)
+map_china <- plyr::join(map_china,stock_count,by='NAME',type='full')
+map_city <- plyr::join(stock_count,map_city_data[,1:4],by='NAME',type='inner')
+#==============城市市值地图=====================
+library(ggplot2)
+library(ggthemes)
+d_map1 <- ggplot(map_china,aes(x=long,y=lat,fill=log(mv_total))) +
+  geom_polygon(aes(group=group),colour="grey40")+
+  scale_fill_distiller('总市值',breaks=c(7.6,9.21,9.90,10.82,11.51),
+                       labels=c('2e3','1e4','2e4','5e4','1e5'),
+                       palette = 'Blues',direction = 0)+#指定渐变填充色，可使用RGB
+  coord_map("polyconic")+ggtitle('中国上市公司总市值各省份分布')+
+  geom_text(data=map_city,aes(x=long,y=lat,label=NAME),size=3,colour='#8B0000',
+            fontface='bold',
+            alpha=0.8,check_overlap = T)+
+  theme_map() %+replace% theme(legend.position = c(0.9,0.4),
+                               legend.key.width = unit(0.8,'lines'),
+                               legend.text.align= 1,
+                               legend.title = element_text(),
+                               plot.margin = unit(c(0,0,0,0),'lines'),
+                               plot.title=element_text(margin = margin(t=10),
+                                                       hjust=0.5,face='bold',
+                                                       size=rel(1.6)))
+d_map1
+```
+
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+#地图2
+d_map2 <- ggplot(map_china,aes(x=long,y=lat,fill=log(mv_total)),colour='white')+
+  geom_polygon(aes(group=group),colour='grey40')+
+  scale_fill_distiller('总市值',breaks=c(7.6,9.21,9.90,10.82,11.51),
+                       labels=c('2e3','1e4','2e4','5e4','1e5'),
+                       palette = 'Blues',direction = 0)+
+  geom_point(aes(x=long,y=lat,size=count,colour=count),shape=16,data=map_city)+
+  scale_colour_gradient('企业数',low='white',high='#D73434')+
+  scale_size_area('企业\n数量',max_size=6,guide=FALSE)+
+  coord_map("polyconic")+ggtitle('中国上市公司总市值-企业数量各省份分布')+
+  theme_map() %+replace% theme(legend.position = c(0.9,0.25),
+                               legend.key.width = unit(0.8,'lines'),
+                               legend.text.align= 1,
+                               legend.title = element_text(),
+                               plot.title=element_text(margin = margin(t=10),
+                                                       hjust=0.5,face='bold',size=rel(1.5)))
+d_map2
+```
+
+# ALLSTART
+```{r,warning=FALSE,message=FALSE,echo=TRUE,eval=TRUE,fig.showtext=TRUE}
+##红色版
+xs <- seq(16-1.75,16+1.75,length=1000);ys <- sqrt(1.75^2-(xs-16)^2)+9.5
+xs2 <- seq(16+1.75,16-1.75,length=1000);ys2 <- sqrt(1.75^2-(xs2-16)^2)+9.5
+poly1 <- data.frame(x=c(xs,xs2),y=c(ys,ys2))
+
+ys_1 <- seq(9.5-1.25,9.5+1.25,length=1000);xs_1 <- sqrt(1.25^2-(ys_1-9.5)^2)+7.8
+poly2 <- data.frame(x=xs_1,y=ys_1)
+poly3 <- data.frame(x=32-xs_1,y=ys_1)
+
+ys_2 <- seq(9.50-7.05,9.50+7.05,length=1000);xs_2 <- sqrt(7.05^2-(ys_2-9.50)^2)+2
+poly4 <- data.frame(x=c(xs_2[1:999],2),y=ys_2)
+poly5 <- data.frame(x=32-c(xs_2[1:999],2),y=ys_2)
+
+set.seed(0997)
+random <- data.frame(x=sample(5:24,5,replace = F)+2,
+                     y=sample(3:15,5,replace=F)+2)%>%
+  data.frame(com=c('中科信息','寒锐钴业','江丰电子','方大碳素','华大基因'),
+             type=rep(1,5),.)
+random2 <- data.frame(x=sample(16:28,5,replace = F),
+                      y=sample(2:17,5,replace=F))%>%
+  data.frame(com=c('贵州茅台','中国平安','招商银行','万科A','格力电器'),type=rep(2,5),.)
+data <- rbind(random,random2)
+data$type <- as.factor(data$type)
+ggplot()+xlim(0,32)+ylim(-1,20)+
+  geom_rect(aes(xmin=0,xmax=32,ymin=-1,ymax=20),fill='#8B1A1A',color='white',size=1.2)+
+  geom_rect(data=NULL,aes(xmin=2,xmax=30,ymin=1,ymax=18),
+            fill='#3A5FCD',color='white',size=1.2)+
+  geom_polygon(data=poly4,aes(x=x,y=y),fill='#3A5FCD',color='white',size=1.2)+
+  geom_polygon(data=poly5,aes(x=x,y=y),fill='#3A5FCD',color='white',size=1.2)+
+  geom_polygon(data=poly1,aes(x=x,y=y),fill='#8B1A1A',color='white',size=1.2)+
+  geom_polygon(data=poly2,aes(x=x,y=y),fill='#3A5FCD',color='white',size=1.2)+
+  geom_polygon(data=poly3,aes(x=x,y=y),fill='#3A5FCD',color='white',size=1.2)+
+  geom_polygon(data=NULL,aes(x=c(2,7.8,7.8,2),y=c(6.5,8.25,10.75,12.5)),
+               fill='#8B1A1A',color='white',size=1.2)+
+  geom_polygon(data=NULL,aes(x=c(30,24.2,24.2,30),y=c(6.5,8.25,10.75,12.5)),
+               fill='#8B1A1A',color='white',size=1.2)+
+  geom_line(data=NULL,aes(x=c(16,16),y=c(1,18)),color='white',size=1.2)+
+  annotate('text',x=3,y=9.5,label='中小创',hjust=0,size=6,color='orange')+
+  annotate('text',x=29,y=9.5,label='大蓝筹',hjust=1,size=6,color='orange')+
+  geom_point(data=data,aes(x=x,y=y,colour=type),size=5)+
+  geom_text(data=data,aes(x=x,y=y,label=com),size=4,color='white',
+            nudge_x = 0.5,nudge_y = 0.5)+
+  geom_point(data=NULL,aes(x=18,y=0),size=6,colour='white')+
+  geom_text(data=NULL,aes(x=20,y=0),color='white',label='CRSC: 进攻犯规！',
+            nudge_x = 1,hjust=0.3)+
+  geom_text(data=NULL,aes(x=16,y=9.5),label='2017',color='grey50',size=30,alpha=0.5)+
+  scale_color_manual(values = c('#FFF68F','grey66'),guide=FALSE)+
+  theme(plot.background = element_blank(),
+        plot.margin = unit(c(0,0,0,0),'points'),
+        panel.background=element_blank(),
+        axis.title.x = element_blank(),axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank())
+#紫金色
+#ys_2 <- seq(9.50-7.05,9.50+7.05,length=1000);xs_2 <- sqrt(7.05^2-(ys_2-9.50)^2)+2.5
+poly4 <- data.frame(x=c(2,xs_2[1:999],2.5,2),y=c(9.50-7.05,ys_2,9.50+7.05))
+poly5 <- data.frame(x=32-c(2,xs_2[1:999],2.5,2),y=c(9.50-7.05,ys_2,9.50+7.05))
+windowsFonts(myfont=windowsFont('New Time Roman'))
+ggplot()+xlim(0,32)+ylim(-1,20)+
+  geom_rect(aes(xmin=0,xmax=32,ymin=-1,ymax=20),fill='#FFFF00',color='#6959CD',size=1.2)+
+  geom_rect(aes(xmin=2,xmax=30,ymin=1,ymax=18),fill='#FFEC8B',color='#6959CD',size=1.2)+
+  geom_polygon(data=poly4,aes(x=x,y=y),fill='#FFEC8B',color='#6959CD',size=1.2)+
+  geom_polygon(data=poly5,aes(x=x,y=y),fill='#FFEC8B',color='#6959CD',size=1.2)+
+  geom_polygon(data=poly1,aes(x=x,y=y),fill='#CD9B1D',color='#6959CD',size=1.2)+
+  geom_polygon(data=poly2,aes(x=x,y=y),fill='#FFEC8B',color='#6959CD',size=1.2)+
+  geom_polygon(data=poly3,aes(x=x,y=y),fill='#FFEC8B',color='#6959CD',size=1.2)+
+  geom_polygon(data=NULL,aes(x=c(2,7.8,7.8,2),y=c(6.5,8.25,10.75,12.5)),
+               fill='#6959CD',color='#6959CD',size=1.2)+
+  geom_polygon(data=NULL,aes(x=c(30,24.2,24.2,30),y=c(6.5,8.25,10.75,12.5)),
+               fill='#6959CD',color='#6959CD',size=1.2)+
+  geom_line(data=NULL,aes(x=c(16,16),y=c(1,18)),color='#6959CD',size=1.2)+
+  annotate('text',x=3,y=9.5,label='中小创',hjust=0,size=6,color='orange')+
+  annotate('text',x=29,y=9.5,label='大蓝筹',hjust=1,size=6,color='orange')+
+  geom_point(data=data,aes(x=x,y=y,colour=type),size=5)+
+  geom_text(data=data,aes(x=x,y=y,label=com),size=4,color='black',
+            nudge_x = 0.5,nudge_y = 0.5)+
+  geom_point(data=NULL,aes(x=18,y=0),size=6,colour='grey20')+
+  geom_text(data=NULL,aes(x=20,y=0),color='grey20',label='CRSC: Foul！',
+            nudge_x = 1,hjust=0.3)+
+  geom_text(data=NULL,aes(x=16,y=9.5),label='2017',family='myfont',
+            color='#6959CD',size=20,alpha=0.5)+
+  scale_color_manual(values = c('#4F94CD','#8B5A2B'),guide=FALSE)+
+  theme(plot.background = element_blank(),
+        plot.margin = unit(c(0,0,0,0),'points'),
+        panel.background=element_blank(),
+        axis.title.x = element_blank(),axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank())
+```
